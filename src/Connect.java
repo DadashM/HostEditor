@@ -14,7 +14,6 @@ import jcifs.smb.SmbFileOutputStream;
  *
  * @author admin
  */
-// yeahhhhhhhhhhhhhhhhhhhhhhhhh
 public class Connect {
 
     String path;
