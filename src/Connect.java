@@ -36,12 +36,10 @@ public class Connect {
             smbOut.write(b);
             smbOut.flush();
             smbOut.close();
-            System.out.println("dispose1");
             Gui.loading.dispose();
         } catch (Exception e) {
-            System.out.println("dispose2");
             Gui.loading.dispose();
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(gui, e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 if (smbOut != null) {
@@ -49,10 +47,9 @@ public class Connect {
                     smbOut.close();
                 }
             } catch (Exception e) {
-                System.out.println("dispose3");
                 Gui.loading.dispose();
                 e.printStackTrace();
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(gui, e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
             }
         }
     }

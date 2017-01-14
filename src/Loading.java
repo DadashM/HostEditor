@@ -37,7 +37,6 @@ public class Loading extends javax.swing.JDialog {
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
-        setAlwaysOnTop(true);
         setBackground(new Color(0,0,0,0));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/load1.gif"))); // NOI18N

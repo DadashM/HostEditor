@@ -450,9 +450,7 @@ public class Gui extends javax.swing.JFrame {
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
-                    System.out.println("begin");
                     connection.connect(LOGIN, PASSWORD);
-                    System.out.println("interrupted");
                 }
             });
             
@@ -467,15 +465,7 @@ public class Gui extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Loading loading = new Loading(Gui.this, true);
-                loading.setLocationRelativeTo(Gui.this);
-                loading.setVisible(true);
-            }
-        });
-        thread.start();
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
