@@ -22,6 +22,7 @@ public class Connect {
     NtlmPasswordAuthentication ntlm;
     SmbFile smbFile;
     SmbFileOutputStream smbOut;
+    Gui gui;
 
     public void connect(String login, String pass) {
         try {
@@ -35,7 +36,11 @@ public class Connect {
             smbOut.write(b);
             smbOut.flush();
             smbOut.close();
+            System.out.println("dispose1");
+            Gui.loading.dispose();
         } catch (Exception e) {
+            System.out.println("dispose2");
+            Gui.loading.dispose();
             JOptionPane.showMessageDialog(null, e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
@@ -44,6 +49,8 @@ public class Connect {
                     smbOut.close();
                 }
             } catch (Exception e) {
+                System.out.println("dispose3");
+                Gui.loading.dispose();
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
             }

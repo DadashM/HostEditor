@@ -155,28 +155,33 @@ public class Credential extends JDialog {
 
     public void action() {
         password = new String(passField.getPassword());
-        if (!password.equals("")) {
-            try {
-                fileOut = new File(System.getProperty("user.home") + "\\AppData\\Local\\HostEditor");
-                if (!fileOut.exists()) {
-                    fileOut.mkdir();
+
+        if (!loginField.getText().isEmpty()) {
+            if (!password.equals("")) {
+                try {
+                    fileOut = new File(System.getProperty("user.home") + "\\AppData\\Local\\HostEditor");
+                    if (!fileOut.exists()) {
+                        fileOut.mkdir();
+                    }
+                    fOut = new FileOutputStream(fileOut.getAbsolutePath() + "\\lst.dat");
+                    dOut = new DataOutputStream(fOut);
+                    login = loginField.getText();
+                    dOut.writeUTF(login);
+                    Gui.LOGIN = login;
+                    Gui.PASSWORD = password;
+                    fOut.flush();
+                    fOut.close();
+                    dOut.flush();
+                    dOut.close();
+                    this.dispose();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                fOut = new FileOutputStream(fileOut.getAbsolutePath() + "\\lst.dat");
-                dOut = new DataOutputStream(fOut);
-                login = loginField.getText();
-                dOut.writeUTF(login);
-                Gui.LOGIN = login;
-                Gui.PASSWORD = password;
-                fOut.flush();
-                fOut.close();
-                dOut.flush();
-                dOut.close();
-                this.dispose();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } else {
+                JOptionPane.showMessageDialog(this, "Password is required", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         } else {
-            JOptionPane.showMessageDialog(this, "Password is required", "Warning", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Username is required", "Warning", JOptionPane.WARNING_MESSAGE);
         }
     }
 

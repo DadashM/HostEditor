@@ -34,6 +34,7 @@ public class Gui extends javax.swing.JFrame {
     static String ip;
 
     Connect connection = new Connect();
+    public static Loading loading;
 
     /**
      * Creates new form COPY
@@ -198,6 +199,11 @@ public class Gui extends javax.swing.JFrame {
         });
 
         jButton2.setText("DENY");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Credential");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -440,10 +446,37 @@ public class Gui extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "IP address not specified", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             ip = firstOctet.getText() + "." + secondOctet.getText() + "." + thirdOctet.getText() + "." + fourthOctet.getText();
-            connection.connect(LOGIN, PASSWORD);
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("begin");
+                    connection.connect(LOGIN, PASSWORD);
+                    System.out.println("interrupted");
+                }
+            });
+            
+            loading = new Loading(this, true);
+            loading.setLocationRelativeTo(this);
+            thread.start();
+            loading.setVisible(true);
+            
+
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Loading loading = new Loading(Gui.this, true);
+                loading.setLocationRelativeTo(Gui.this);
+                loading.setVisible(true);
+            }
+        });
+        thread.start();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
