@@ -453,19 +453,22 @@ public class Gui extends javax.swing.JFrame {
                     connection.connect(LOGIN, PASSWORD);
                 }
             });
-            
+
             loading = new Loading(this, true);
             loading.setLocationRelativeTo(this);
             thread.start();
             loading.setVisible(true);
-            
-
         }
 
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+        if (firstOctet.getText().isEmpty() || secondOctet.getText().isEmpty() || thirdOctet.getText().isEmpty() || fourthOctet.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "IP address not specified", "Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            ip = firstOctet.getText() + "." + secondOctet.getText() + "." + thirdOctet.getText() + "." + fourthOctet.getText();
+            connection.denyAction(LOGIN, PASSWORD);
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
