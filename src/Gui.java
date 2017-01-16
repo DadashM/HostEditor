@@ -467,7 +467,18 @@ public class Gui extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "IP address not specified", "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             ip = firstOctet.getText() + "." + secondOctet.getText() + "." + thirdOctet.getText() + "." + fourthOctet.getText();
-            connection.denyAction(LOGIN, PASSWORD);
+
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    connection.denyAction(LOGIN, PASSWORD);
+                }
+            });
+
+            loading = new Loading(this, true);
+            loading.setLocationRelativeTo(this);
+            thread.start();
+            loading.setVisible(true);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
