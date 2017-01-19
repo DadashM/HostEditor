@@ -39,6 +39,8 @@ public class Connect {
     String path;
     String text;
     StringBuilder stb;
+    int countBlankLines;
+    
     NtlmPasswordAuthentication ntlm;
     SmbFile smbFile;
     SmbFileOutputStream smbOut;
@@ -57,7 +59,7 @@ public class Connect {
         try {
             lineExistFlag = false;
             path = "smb://" + Gui.ip + "/C$/Windows/System32/drivers/etc/hosts";
-            text = System.lineSeparator() + "62.212.252.29 youtube.com";
+            text = "62.212.252.29 youtube.com";
             //b = text.getBytes(Charset.forName("UTF-8"));
 
             ntlm = new NtlmPasswordAuthentication("", login, pass);
@@ -108,7 +110,7 @@ public class Connect {
         try {
             findFlag = false;
             path = "smb://" + Gui.ip + "/C$/Windows/System32/drivers/etc/hosts";
-            text = "62.212.252.29 youtube.com";
+            String textDeny = "62.212.252.29 youtube.com";
 
             ntlm = new NtlmPasswordAuthentication("", login, pass);
             smbFile = new SmbFile(path, ntlm);
@@ -119,15 +121,15 @@ public class Connect {
 
             fileToString(br);
 
-            pattern = Pattern.compile(text);
+            pattern = Pattern.compile(textDeny);
             matcher = pattern.matcher(stb.toString());
 
             while (matcher.find()) {
                 //Output Stream
                 smbFile = new SmbFile(path, ntlm);
-                smbOut = new SmbFileOutputStream(smbFile);
+                smbOut =  new SmbFileOutputStream(smbFile);
                 bw = new BufferedWriter(new OutputStreamWriter(smbOut));
-                stb = new StringBuilder(matcher.replaceAll(""));
+                stb = new StringBuilder(matcher.replaceAll(" "));
                 findFlag = true;
             }
 
@@ -161,9 +163,18 @@ public class Connect {
 
     public void fileToString(BufferedReader br) throws IOException {
         stb = new StringBuilder();
+        countBlankLines = 0;
         while ((line = br.readLine()) != null) {
             stb.append(line);
             stb.append(System.lineSeparator());
+            if (line.equals("")) {
+                countBlankLines += 1;
+                System.out.println("line = " + countBlankLines);
+            }
+        }
+        
+        if (countBlankLines >= 1) {
+            text = System.lineSeparator() + "62.212.252.29 youtube.com";
         }
     }
 
