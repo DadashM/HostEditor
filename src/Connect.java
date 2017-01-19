@@ -23,6 +23,7 @@ import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 import jcifs.smb.SmbFileInputStream;
 import jcifs.smb.SmbFileOutputStream;
+import sun.applet.Main;
 
 
 /*
@@ -40,7 +41,7 @@ public class Connect {
     String text;
     StringBuilder stb;
     int countBlankLines;
-    
+
     NtlmPasswordAuthentication ntlm;
     SmbFile smbFile;
     SmbFileOutputStream smbOut;
@@ -86,7 +87,7 @@ public class Connect {
                 bw = new BufferedWriter(new OutputStreamWriter(smbOut));
                 bw.write(text);
                 bw.flush();
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(gui, "Host record all ready exist", "Exist", JOptionPane.WARNING_MESSAGE);
             }
             Gui.loading.dispose();
@@ -98,6 +99,13 @@ public class Connect {
                 if (bw != null) {
                     bw.close();
                     smbOut.close();
+                    System.out.println("grantAction = bw.closed");
+                }
+
+                if (br != null) {
+                    br.close();
+                    smbIn.close();
+                    System.out.println("grantAction = br.closed");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -127,15 +135,16 @@ public class Connect {
             while (matcher.find()) {
                 //Output Stream
                 smbFile = new SmbFile(path, ntlm);
-                smbOut =  new SmbFileOutputStream(smbFile);
+                smbOut = new SmbFileOutputStream(smbFile);
                 bw = new BufferedWriter(new OutputStreamWriter(smbOut));
-                stb = new StringBuilder(matcher.replaceAll(" "));
+                stb = new StringBuilder(matcher.replaceAll(""));
                 findFlag = true;
             }
 
             if (findFlag) {
                 stb.toString().trim();
-                bw.write(stb.toString());
+                String s = stb.toString().replaceAll("(?m)^[ \t]*\r?\n", "");
+                bw.write(s);
                 bw.flush();
             } else {
                 JOptionPane.showMessageDialog(gui, "No host records found", "Not Found", JOptionPane.WARNING_MESSAGE);
@@ -149,10 +158,12 @@ public class Connect {
                 if (br != null) {
                     br.close();
                     smbIn.close();
+                    System.out.println("denyAction = br.closed");
                 }
                 if (bw != null) {
                     bw.close();
                     smbOut.close();
+                    System.out.println("denyAction = bw.closed");
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(gui, e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
@@ -172,7 +183,7 @@ public class Connect {
                 System.out.println("line = " + countBlankLines);
             }
         }
-        
+
         if (countBlankLines >= 1) {
             text = System.lineSeparator() + "62.212.252.29 youtube.com";
         }
