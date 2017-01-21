@@ -1,4 +1,5 @@
 
+import java.awt.Toolkit;
 import javax.swing.JOptionPane;
 
 /*
@@ -41,6 +42,7 @@ public class Gui extends javax.swing.JFrame {
      */
     public Gui() {
         initComponents();
+        setIcon();
     }
 
     /**
@@ -65,6 +67,7 @@ public class Gui extends javax.swing.JFrame {
         jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Youtube Killer");
         setResizable(false);
 
         IpPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -531,4 +534,8 @@ public class Gui extends javax.swing.JFrame {
     private javax.swing.JTextField secondOctet;
     private javax.swing.JTextField thirdOctet;
     // End of variables declaration//GEN-END:variables
+
+    private void setIcon() {
+        setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("img/you.png")));
+    }
 }

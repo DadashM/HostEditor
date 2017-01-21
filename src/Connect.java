@@ -87,6 +87,7 @@ public class Connect {
                 bw = new BufferedWriter(new OutputStreamWriter(smbOut));
                 bw.write(text);
                 bw.flush();
+                JOptionPane.showMessageDialog(gui, "Done !", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(gui, "Host record all ready exist", "Exist", JOptionPane.WARNING_MESSAGE);
             }
@@ -99,13 +100,11 @@ public class Connect {
                 if (bw != null) {
                     bw.close();
                     smbOut.close();
-                    System.out.println("grantAction = bw.closed");
                 }
 
                 if (br != null) {
                     br.close();
                     smbIn.close();
-                    System.out.println("grantAction = br.closed");
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -146,6 +145,7 @@ public class Connect {
                 String s = stb.toString().replaceAll("(?m)^[ \t]*\r?\n", "");
                 bw.write(s);
                 bw.flush();
+                JOptionPane.showMessageDialog(gui, "Done !", "Success", JOptionPane.INFORMATION_MESSAGE);
             } else {
                 JOptionPane.showMessageDialog(gui, "No host records found", "Not Found", JOptionPane.WARNING_MESSAGE);
             }
@@ -158,12 +158,10 @@ public class Connect {
                 if (br != null) {
                     br.close();
                     smbIn.close();
-                    System.out.println("denyAction = br.closed");
                 }
                 if (bw != null) {
                     bw.close();
                     smbOut.close();
-                    System.out.println("denyAction = bw.closed");
                 }
             } catch (Exception e) {
                 JOptionPane.showMessageDialog(gui, e.getMessage(), "Exception", JOptionPane.ERROR_MESSAGE);
@@ -180,7 +178,6 @@ public class Connect {
             stb.append(System.lineSeparator());
             if (line.equals("")) {
                 countBlankLines += 1;
-                System.out.println("line = " + countBlankLines);
             }
         }
 
